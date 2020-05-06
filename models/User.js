@@ -30,5 +30,7 @@ const userSchema = mongoose.Schema({
         type:Number
     }
 })
+
+
 const User = mongoose.model('User', userSchema);
 module.exports = {User}
