@@ -21,7 +21,7 @@ mongoose.connect('mongodb+srv://youngchan:cksl6814@boilerplate-awtvp.mongodb.net
 .catch(err => console.log(err))
 
 
-app.get('/', (req, res) => res.send('Hello World! 안녕하세요1111'))
+app.get('/', (req, res) => res.send('새해복 많이받으세요11111'))
 
 app.post('/register',(req ,res)=> {
     //회원가입 할때 필요한 정보들을 client 에서 가져오면
