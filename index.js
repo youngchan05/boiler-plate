@@ -43,11 +43,18 @@ app.post('/login',(req ,res) =>{
         if(!user){
             return res.json({loginSuccess : false , massegs : "아이디를 확인할수 없습니다."})
         }
-
-        return res.json({
-            massegs:"로그인 성공!"
+        //비밀번호확인
+        user.comparePassword(req.body.password,(err , isMatch) => {
+            if(!isMatch){
+                return res.json({loginSuccess:false , massegs:"비밀번호가 맞지 않습니다."})
+            }
+            return res.json({
+                massegs:"로그인 성공!"
+            })
         })
+          
     })
+    
 })
 
 
