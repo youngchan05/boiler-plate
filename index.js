@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const port = 5000
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser'); 
 const {User} = require('./models/User'); 
 
 const config = require('./config/key');
@@ -10,6 +11,7 @@ app.use(bodyParser.urlencoded({extended:true}));
 
 //apllication/json
 app.use(bodyParser.json());
+app.use(cookieParser());
 console.log(app.use(bodyParser.json()))
 const mongoose = require('mongoose');
 
@@ -36,4 +38,18 @@ app.post('/register',(req ,res)=> {
     })
 })
 
+app.post('/login' , (req , res) =>{
+    User.findOne({email:req.body.email} , (err , user) =>{
+        if(!user){
+            res.json({
+                loginsuccess :false,
+                message : "이메일이 존재하지 않습니다",
+            })
+        }
+    })
+    res.json({
+        err : '에러메세지',
+    })
+    //요청된 이메일이 데이터 베이스에 있다면 비밀번호가 맞는 비밀번호인지 확인.
+})
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))
