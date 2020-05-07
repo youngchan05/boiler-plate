@@ -15,7 +15,7 @@ const userSchema = mongoose.Schema({
     },
     password:{
         type:String, 
-        minlength:5,
+        minlength:50,
     },
     lastname:{
         type:String,
@@ -47,8 +47,9 @@ userSchema.pre('save',function(next){
             });
         });
     }else {
-        next();
+        next()
     }
 })
+
 const User = mongoose.model('User', userSchema);
 module.exports = {User}
