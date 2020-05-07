@@ -38,8 +38,15 @@ app.post('/register', (req, res) => {
 })
 
 app.post('/login',(req ,res) =>{
-    return res.json({
-        massegs:"성공중!"
+    //아이디 확인
+    User.findOne({ email: req.body.email }, (err, user) => {
+        if(!user){
+            return res.json({loginSuccess : false , massegs : "아이디를 확인할수 없습니다."})
+        }
+
+        return res.json({
+            massegs:"로그인 성공!"
+        })
     })
 })
 
