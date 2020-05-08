@@ -56,5 +56,26 @@ userSchema.methods.comparePassword = function(plainPassword ,cb){
         cb(null , isMatch);
     })
 }
+userSchema.methods.generateToken = function(cb){
+    //jsonwebtoken 을 이용해서 token 생성
+    const token = jwt.sign(this._id.toHexString(),'secretToken');
+    this.token = token; 
+    this.save( function(err , user){
+        if(err) return cb(err);
+        cb(null , user);
+    })
+}
+
+userSchema.statics.findByToken = function (token ,cb){
+    jwt.verify(token , 'secretToken', function(err , decoded){
+        //유저 아이디를 이용해서 유저를 찾은 다음에
+        //클라이언트에서 가져온 token 과  DB에 보관된 토큰이 일치하는지 확인
+
+        User.findOne({"_id":decoded  ,"token":token} , function(err , user){
+            if(err) return err;
+            cb(null , user)
+        })
+    })
+}
 const User = mongoose.model('User', userSchema);
 module.exports = {User}
