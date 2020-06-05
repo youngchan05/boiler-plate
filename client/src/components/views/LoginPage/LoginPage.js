@@ -1,5 +1,4 @@
 import React , {useState} from 'react'
-import axios from 'axios';
 import {useDispatch} from 'react-redux';
 import {LoginUser} from '../../../_actions/User_action'
 function LoginPage(props) {
@@ -18,9 +17,9 @@ function LoginPage(props) {
             email : Email,
             password : Password
         }
-        dispatch(LoginUser(body))
+        dispatch(LoginUser(body)) //로그인 로직 실행
         .then(response => {
-            if(response.payload.loginSuccess){
+            if(response.payload.loginSuccess){ //아이디 비밀번호 일치시 메인화면으로이동
                 props.history.push('/');
             }else {
                 alert('Error');
